@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table (name = "order lines")
+@Table (name = "order_lines")
 public class OrderLine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +19,7 @@ public class OrderLine {
 
     @ManyToOne
     private Order order;
+
     @ManyToOne
     private Product product;
 
