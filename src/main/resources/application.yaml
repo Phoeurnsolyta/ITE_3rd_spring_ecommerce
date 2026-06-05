@@ -8,9 +8,9 @@ spring:
         format_sql: true
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/ite_ecommerce_db
-    username: postgres
-    password: lyta12345
+    url: ${URL}
+    username: ${USERNAME}
+    password: ${PASSWORD}
 
   application:
     name: ite-3rd-ecommerce
