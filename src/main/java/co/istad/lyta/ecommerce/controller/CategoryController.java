@@ -42,7 +42,7 @@ public class CategoryController {
     }
 
     @ResponseStatus (HttpStatus.OK)
-    @PutMapping ("/{id}")
+    @PatchMapping ("/{id}")
     public CategoryResponse updateCategoryById(
             @PathVariable Integer id,
             @Valid @RequestBody CreateCategoryRequest createCategoryRequest
@@ -51,7 +51,7 @@ public class CategoryController {
     }
 
     @ResponseStatus (HttpStatus.NO_CONTENT)
-    @PatchMapping ("/{id}")
+    @PutMapping ("/{id}")
     public void categorySoftDelete(@PathVariable Integer id) {
         categoryService.categorySoftDelete(id);
     }
