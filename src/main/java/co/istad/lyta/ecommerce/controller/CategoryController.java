@@ -2,12 +2,18 @@ package co.istad.lyta.ecommerce.controller;
 
 import co.istad.lyta.ecommerce.dto.CategoryResponse;
 import co.istad.lyta.ecommerce.dto.CreateCategoryRequest;
+import co.istad.lyta.ecommerce.dto.RequestDto;
+import co.istad.lyta.ecommerce.dto.SearchRequestDto;
 import co.istad.lyta.ecommerce.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/categories")
@@ -72,4 +78,36 @@ public class CategoryController {
         return categoryService.getSubCategories(mainId, page, size);
     }
 
+    @PostMapping("/search")
+    public Page<CategoryResponse> searchByCriteria(@RequestBody RequestDto requestDto, Pageable pageable) {
+        return categoryService.searchByCriteria(requestDto, pageable);
+    }
+
+//    @GetMapping("/search")
+//    public Page<CategoryResponse> findCategoriesByParam (
+//            @RequestParam (required = false) List<String> column,
+//            @RequestParam (required = false) List<String> value,
+//            @RequestParam (required = false) List<String> operation,
+//            @RequestParam (required = false) List<String> joinTable,
+//            @RequestParam (defaultValue = "OR") String globalOperator,
+//            Pageable pageable) {
+//
+//        List<SearchRequestDto> dtos = new ArrayList<>();
+//        for (int i = 0; i < column.size(); i++) {
+//            SearchRequestDto dto = new SearchRequestDto();
+//            dto.setColumn(column.get(i));
+//            dto.setValue(value.get(i));
+//            dto.setOperator(SearchRequestDto.Operator.valueOf(operation.get(i).toUpperCase()));
+//
+//            if (joinTable != null && i < joinTable.size())
+//                dto.setJoinTable(joinTable.get(i));
+//            dtos.add(dto);
+//        }
+//
+//        RequestDto requestDto = new RequestDto();
+//        requestDto.setSearchRequestDto(dtos);
+//        requestDto.setGlobalOperator(RequestDto.GlobalOperator.valueOf(globalOperator.toUpperCase()));
+//        return categoryService.searchByCriteria(requestDto, pageable);
+//
+//    }
 }

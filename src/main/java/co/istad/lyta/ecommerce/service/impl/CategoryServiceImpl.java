@@ -3,14 +3,17 @@ package co.istad.lyta.ecommerce.service.impl;
 import co.istad.lyta.ecommerce.domain.Category;
 import co.istad.lyta.ecommerce.dto.CategoryResponse;
 import co.istad.lyta.ecommerce.dto.CreateCategoryRequest;
+import co.istad.lyta.ecommerce.dto.RequestDto;
 import co.istad.lyta.ecommerce.mapper.CategoryMapper;
 import co.istad.lyta.ecommerce.repository.CategoryRepository;
 import co.istad.lyta.ecommerce.service.CategoryService;
+import co.istad.lyta.ecommerce.service.FilterSpecifications;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,6 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
+    private final FilterSpecifications<Category> filterSpecifications;
 
 //    public CategoryServiceImpl(CategoryRepository categoryRepository) {
 //        this.categoryRepository = categoryRepository;
@@ -88,7 +92,7 @@ public class CategoryServiceImpl implements CategoryService {
                         "Category not found"
                 ));
 
-        category.setName(createCategoryRequest.name());
+
 
         if (createCategoryRequest.parentCategoryId() != null) {
             Category parentCategory = categoryRepository
@@ -100,6 +104,10 @@ public class CategoryServiceImpl implements CategoryService {
 
             category.setParentCategory(parentCategory);
         }
+
+        category.setName(createCategoryRequest.name());
+        category.setDescription(createCategoryRequest.description());
+        category.setIcon(createCategoryRequest.icon());
 
         category = categoryRepository.save(category);
 
@@ -160,5 +168,16 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findAllByParentCategoryId(mainId, pageable)
                 .map(categoryMapper::mapCategoryToCategoryResponse);
     }
+
+    @Override
+    public Page<CategoryResponse> searchByCriteria(RequestDto requestDto, Pageable pageable) {
+
+        Specification<Category> categorySpecification =
+                filterSpecifications.getSearchSpecification(requestDto.getSearchRequestDto(), requestDto.getGlobalOperator());
+        return categoryRepository.findAll(categorySpecification, pageable)
+                .map(categoryMapper::mapCategoryToCategoryResponse) ;
+
+    }
+
 
 }
