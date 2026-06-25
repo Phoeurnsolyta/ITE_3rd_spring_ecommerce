@@ -1,6 +1,7 @@
 package co.istad.lyta.ecommerce.features.file;
 
 import co.istad.lyta.ecommerce.features.file.dto.FileUploadResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -12,4 +13,10 @@ public interface FileUploadService {
     List<FileUploadResponse> uploadMultiple (List<MultipartFile> files);
 
     void deleteFileByName (String name);
+
+    Page<FileUploadResponse> findAll (int pageNumber, int pageSize);
+
+    FileUploadResponse findByName (String name);
+
+
 }

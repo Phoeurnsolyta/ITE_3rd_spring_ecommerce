@@ -18,6 +18,10 @@ spring:
 
   application:
     name: ite-3rd-ecommerce
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 20MB
 server:
   port: 7777
 

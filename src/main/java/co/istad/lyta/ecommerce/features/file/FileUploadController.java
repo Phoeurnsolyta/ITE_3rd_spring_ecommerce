@@ -2,6 +2,7 @@ package co.istad.lyta.ecommerce.features.file;
 
 import co.istad.lyta.ecommerce.features.file.dto.FileUploadResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,4 +35,20 @@ public class FileUploadController {
     public void deleteFile (@PathVariable  String name) {
         fileUploadService.deleteFileByName(name);
     }
+
+    @GetMapping("/{name}")
+    public FileUploadResponse findByName(@PathVariable String name) {
+        return fileUploadService.findByName(name);
+    }
+
+
+    @GetMapping
+    public Page<FileUploadResponse> findAll(
+            @RequestParam(required = false, defaultValue = "0") int pageNumber,
+            @RequestParam(required = false, defaultValue = "25") int pageSize
+    ) {
+        return fileUploadService.findAll(pageNumber, pageSize);
+    }
+
+
 }
