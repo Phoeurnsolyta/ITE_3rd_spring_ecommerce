@@ -39,7 +39,7 @@ public class Order {
     private Boolean isDeleted;
 
 
-    @OneToMany (mappedBy = "order")
+    @OneToMany (mappedBy = "order", cascade = CascadeType.PERSIST)
     private List<OrderLine> orderLines;
 
 }
