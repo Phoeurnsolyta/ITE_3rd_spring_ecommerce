@@ -16,9 +16,9 @@ public interface CategoryService {
 
     Page<CategoryResponse> getAllCategoriesByPagination(int page, int size);
 
-    void categorySoftDelete(Integer id);
+    void softDeleteCategory(Integer id);
 
-    void categoryHardDelete(Integer id);
+    void hardDeleteCategory(Integer id);
 
     Page<CategoryResponse> getSubCategories(Integer mainId, int page, int size);
 

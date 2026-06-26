@@ -53,14 +53,14 @@ public class CategoryController {
 
     @ResponseStatus (HttpStatus.NO_CONTENT)
     @PutMapping ("/{id}")
-    public void categorySoftDelete(@PathVariable Integer id) {
-        categoryService.categorySoftDelete(id);
+    public void softDeleteCategory(@PathVariable Integer id) {
+        categoryService.softDeleteCategory(id);
     }
 
     @ResponseStatus (HttpStatus.NO_CONTENT)
     @DeleteMapping ("/{id}")
-    public void categoryHardDelete(@PathVariable Integer id) {
-        categoryService.categoryHardDelete(id);
+    public void hardDeleteCategory(@PathVariable Integer id) {
+        categoryService.hardDeleteCategory(id);
     }
 
     @ResponseStatus (HttpStatus.OK)

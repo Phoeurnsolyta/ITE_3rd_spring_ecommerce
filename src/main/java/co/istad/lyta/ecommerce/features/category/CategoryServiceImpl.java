@@ -120,7 +120,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void categorySoftDelete(Integer id) {
+    public void softDeleteCategory(Integer id) {
         Category category = categoryRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
@@ -136,7 +136,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void categoryHardDelete(Integer id) {
+    public void hardDeleteCategory(Integer id) {
 
         Category category = categoryRepository
                 .findById(id)
