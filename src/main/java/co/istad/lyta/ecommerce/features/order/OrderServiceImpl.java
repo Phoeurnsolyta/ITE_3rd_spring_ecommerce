@@ -5,6 +5,7 @@ import co.istad.lyta.ecommerce.features.order.dto.OrderResponse;
 import co.istad.lyta.ecommerce.features.order.dto.SetPaymentRequest;
 import co.istad.lyta.ecommerce.features.product.Product;
 import co.istad.lyta.ecommerce.features.product.ProductRepository;
+import co.istad.lyta.ecommerce.security.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -57,15 +58,15 @@ public class OrderServiceImpl implements OrderService {
         }
 
         order.setOrderLines(orderLines);
-//        security related
-        order.setCustomerId("Lyta");
+
+        order.setCustomerId(SecurityUtils.extractUserId());
 
         order.setIsDeleted(false);
         order.setOrderedAt(LocalDateTime.now());
         order.setStatus(false);
 
         Order savedOrder = orderRepository.save(order);
-//        orderRepository.save(order);
+
         return orderMapper.mapOrderToOrderResponse(savedOrder);
     }
 

@@ -3,6 +3,11 @@ file:
   storage-location: D:\ite-file\
   base-uri: http://localhost:${server.port}${file.client-path}/
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9999/realms/ite-ecommerce
   jpa:
     hibernate:
       ddl-auto: update
@@ -24,4 +29,11 @@ spring:
       max-request-size: 20MB
 server:
   port: 7777
+
+keycloak:
+  server-url: http://localhost:9999
+  realm: master
+  target-realm: ite-ecommerce
+  client-id: ite-ecommerce-spring-api
+  client-secret: xPoWtUJhiKB3KDucDucO7psWZ9AQOv8I
 
