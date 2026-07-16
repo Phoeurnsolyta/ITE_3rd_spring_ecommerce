@@ -77,14 +77,28 @@ public class AuthServiceImpl implements AuthService {
                       .getFirst();
               log.info("Created User : {}", createUser.getId());
 
-              UserResource userResource1 = keycloak.realm(props.getTargetRealm()).users().get(createUser.getId());
+              UserResource userResource1 = keycloak.realm(props.getTargetRealm())
+                      .users()
+                      .get(createUser.getId());
+//              send email verify
               userResource1.sendVerifyEmail();
               RolesResource roleResource = keycloak.realm(props.getTargetRealm()).roles();
-              RoleRepresentation roleUser = roleResource.get(RoleEnum.USER.name()).toRepresentation();
-              RoleRepresentation roleCustomer = roleResource.get(RoleEnum.CUSTOMER.name()).toRepresentation();
+
+              RoleRepresentation roleUser = roleResource
+                      .get(RoleEnum.USER.name())
+                      .toRepresentation();
+
+              RoleRepresentation roleCustomer = roleResource
+                      .get(RoleEnum.CUSTOMER.name())
+                      .toRepresentation();
+
               log.info("role user: {}", roleUser);
               log.info("role student: {}", roleCustomer);
-              userResource1.roles().realmLevel().add(List.of(roleUser,roleCustomer));
+
+              //              assign role (user, admin)
+              userResource1.roles()
+                      .realmLevel()
+                      .add(List.of(roleUser,roleCustomer));
 
 //              saved user profile
               UserProfile userProfile = new UserProfile();
